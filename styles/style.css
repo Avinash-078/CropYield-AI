@@ -1,0 +1,453 @@
+/* CropYield AI – Premium Agricultural SaaS Styling v4
+   Forest Green + White  |  Responsive  |  Anti-Overflow
+   REVISED: Wider KPI cards, no text wrapping, proper badge placement */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+:root {
+    --primary-deep: #081c15;
+    --primary-forest: #1b4332;
+    --primary-emerald: #2d6a4f;
+    --primary-accent: #40916c;
+    --primary-mint: #52b788;
+    --primary-light: #74c69d;
+    --primary-pale: #e9f5ec;
+    --bg-light: #f7faf8;
+    --surface-white: #ffffff;
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 10px 25px -5px rgba(27, 67, 50, 0.08),
+                   0  8px 10px -6px rgba(27, 67, 50, 0.04);
+}
+
+/* ───── Global Font & Body ───── */
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+}
+
+/* App Header cleanup */
+header[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
+
+/* Main Content Container — wider max-width for KPI breathing room */
+.main .block-container {
+    padding-top: 1.5rem !important;
+    padding-bottom: 3rem !important;
+    max-width: 1440px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SIDEBAR – Dark Forest Green Theme  (UNCHANGED DESIGN)
+   ═══════════════════════════════════════════════════════ */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #092015 0%, #133a27 60%, #1b4332 100%) !important;
+    border-right: 1px solid rgba(82, 183, 136, 0.2);
+}
+
+[data-testid="stSidebar"] * {
+    color: #f1f5f9 !important;
+}
+
+[data-testid="stSidebar"] hr {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-testid="stSidebar"] .stRadio label {
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+[data-testid="stSidebar"] .stRadio label:hover {
+    background-color: rgba(82, 183, 136, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════
+   KPI CARD GRID – Responsive, equal-height, anti-overflow
+   REVISED: wider cards, larger gap, better breakpoints
+   ═══════════════════════════════════════════════════════ */
+
+/* Grid container: rendered by render_kpi_grid() */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr;                    /* 1 col on mobile     */
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    align-items: stretch;                          /* equal card heights  */
+}
+
+/* 2 columns at 640px+ */
+@media (min-width: 640px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 4 equal columns at 1000px+ (wider breakpoint for less cramping) */
+@media (min-width: 1000px) {
+    .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Individual card — wider padding, generous min-height */
+.kpi-card {
+    background: var(--surface-white);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem 1.15rem 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+    box-sizing: border-box;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -5px rgba(27, 67, 50, 0.14);
+}
+
+/* Left accent stripe */
+.kpi-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, #2d6a4f, #52b788);
+}
+
+/* Title row (block, not flex — avoids badge collision) */
+.kpi-title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Large metric value — responsive font size to prevent wrapping */
+.kpi-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.15rem, 1.6vw, 1.55rem);
+    font-weight: 700;
+    color: var(--primary-deep);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Footer block: badge + subtitle stacked underneath value */
+.kpi-footer {
+    margin-top: auto;         /* push to card bottom */
+    padding-top: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Badge pill — always on its own line, never overlapping */
+.kpi-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    line-height: 1.5;
+    vertical-align: middle;
+    align-self: flex-start;    /* left-aligned, not stretching */
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.badge-green  { background-color: #d8f3dc; color: #1b4332; }
+.badge-blue   { background-color: #e0f2fe; color: #0369a1; }
+.badge-amber  { background-color: #fef3c7; color: #92400e; }
+.badge-purple { background-color: #f3e8ff; color: #6b21a8; }
+
+/* Subtitle line below badge */
+.kpi-subtitle {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Streamlit st.metric overflow fix
+   ═══════════════════════════════════════════════════════ */
+[data-testid="stMetric"] {
+    overflow: visible !important;
+}
+[data-testid="stMetricValue"] > div {
+    white-space: nowrap !important;
+    overflow: visible !important;
+    font-size: 1.4rem !important;
+}
+[data-testid="stMetricDelta"] > div {
+    white-space: normal !important;
+    overflow: visible !important;
+}
+[data-testid="stMetricLabel"] > div > p {
+    white-space: nowrap !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PAGE BANNERS
+   ═══════════════════════════════════════════════════════ */
+.page-banner {
+    background: linear-gradient(135deg, #092015 0%, #1b4332 50%, #2d6a4f 100%);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(27, 67, 50, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-banner::after {
+    content: "🌱";
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.page-banner h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ffffff !important;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.45rem 0;
+    line-height: 1.25;
+}
+
+.page-banner p {
+    color: #d8f3dc !important;
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION CARDS & TITLES
+   ═══════════════════════════════════════════════════════ */
+.section-card {
+    background: var(--surface-white);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--card-shadow);
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-forest);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid var(--primary-pale);
+    padding-bottom: 0.6rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   YIELD RESULT HERO CARD
+   ═══════════════════════════════════════════════════════ */
+.yield-hero-card {
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    color: #ffffff;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(27, 67, 50, 0.25);
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.yield-hero-card h3 {
+    color: #d8f3dc !important;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+}
+
+.yield-hero-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.yield-hero-unit {
+    font-size: 1.05rem;
+    color: #74c69d;
+    font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CROP RECOMMENDATION CARDS
+   ═══════════════════════════════════════════════════════ */
+.crop-card {
+    background: #ffffff;
+    border: 1px solid #d8f3dc;
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(27, 67, 50, 0.04);
+}
+
+.crop-card:hover {
+    border-color: #52b788;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(27, 67, 50, 0.08);
+}
+
+.crop-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #1b4332;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TABLE / DATAFRAME
+   ═══════════════════════════════════════════════════════ */
+.dataframe {
+    border-radius: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════ */
+.stButton > button {
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    border: none !important;
+    padding: 0.55rem 1.4rem !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 12px rgba(27, 67, 50, 0.15) !important;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%) !important;
+    box-shadow: 0 6px 18px rgba(27, 67, 50, 0.25) !important;
+    transform: translateY(-1px) !important;
+}
+
+.secondary-btn button {
+    background: #ffffff !important;
+    color: #1b4332 !important;
+    border: 1px solid #2d6a4f !important;
+    box-shadow: none !important;
+}
+
+.secondary-btn button:hover {
+    background: #e9f5ec !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TABS
+   ═══════════════════════════════════════════════════════ */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px 8px 0 0;
+    padding: 10px 18px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: transparent !important;
+    color: #1b4332 !important;
+    border-bottom: 3px solid #1b4332 !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ALERT / INFO BOX
+   ═══════════════════════════════════════════════════════ */
+div[data-testid="stAlert"] {
+    border-radius: 12px;
+    border-left-width: 5px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CHART SPACING — improved vertical rhythm
+   ═══════════════════════════════════════════════════════ */
+div[data-testid="stPlotlyChart"] {
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ARCHITECTURE STEP CARDS (overview page bottom)
+   ═══════════════════════════════════════════════════════ */
+.arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.arch-card {
+    background: #f8faf9;
+    border: 1px solid #d8f3dc;
+    border-radius: 10px;
+    padding: 1.15rem;
+}
+
+.arch-card-title {
+    font-weight: 700;
+    color: #1b4332;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+.arch-card-desc {
+    font-size: 0.85rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.5;
+}
